@@ -5,15 +5,15 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-public interface BaseControllerInterface<T,Req,Res,ID>{
+public interface BaseControllerInterface<SearchReq,Req,Res,ID>{
 
-    ApiResponse<Res> create(T request);
+    ApiResponse<Res> create(Req request);
 
 
-    ApiResponse<Res> update(T request);
+    ApiResponse<Res> update(Req request);
 
     @PostMapping("/get/all")
-    ApiResponse<PagingResponse<Res>> getAll(@RequestBody(required = false) Req request);
+    ApiResponse<PagingResponse<Res>> getAll( SearchReq request);
 
     @GetMapping("/get/{id}")
     ApiResponse<Res> getById( @PathVariable ID id);
