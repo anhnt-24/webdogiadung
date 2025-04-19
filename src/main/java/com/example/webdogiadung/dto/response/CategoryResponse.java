@@ -16,4 +16,5 @@ public class CategoryResponse {
     String name;
     String description;
     String thumbnail;
+    Boolean isDeleted;
 }

@@ -4,5 +4,8 @@ import com.example.webdogiadung.dto.request.CategoryRequest;
 import com.example.webdogiadung.dto.request.search.CategorySearchRequest;
 import com.example.webdogiadung.dto.response.CategoryResponse;
 
-public interface CategoryInterfa  extends BaseServiceInterface<CategorySearchRequest, CategoryRequest, CategoryResponse,String>{
+import java.util.List;
+
+public interface CategoryServiceInterface extends BaseServiceInterface<CategorySearchRequest, CategoryRequest, CategoryResponse,String>{
+    String restore(List<String> listId);
 }

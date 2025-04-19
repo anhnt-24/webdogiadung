@@ -5,10 +5,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "category")
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -22,6 +20,8 @@ public class CategoryEntity extends BaseEntity<String> {
     String name;
     String description;
     String thumbnail;
-    Boolean isDeleted;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    Boolean isDeleted=false;
 
 }

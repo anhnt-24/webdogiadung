@@ -1,11 +1,28 @@
 package com.example.webdogiadung.dto.request.search;
 
 import com.example.webdogiadung.entity.CategoryEntity;
+import com.example.webdogiadung.repository.specification.CategorySpecification;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.domain.Specification;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategorySearchRequest extends FilteringRequest<CategoryEntity>{
+    String name;
+    String description;
+    Boolean isDeleted ;
+
     @Override
     public Specification<CategoryEntity> specification() {
-        return null;
+        return CategorySpecification.builder()
+                .withIsDeleted(isDeleted)
+                .withName(name)
+                .withDescription(description)
+                .build();
     }
 }

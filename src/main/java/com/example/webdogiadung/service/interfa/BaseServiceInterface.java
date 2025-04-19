@@ -9,7 +9,7 @@ public interface BaseServiceInterface<SearchReq,Req,Res,ID>{
     Res create(Req data);
     PagingResponse<Res> getAll(SearchReq request);
     Res getById(ID id);
-    String deleteById(ID id);
+    String deleteById(ID id,boolean isDelete);
     Res update(Req data);
-    String deleteByListId(List<ID> listId);
+    String deleteByListId(List<ID> listId,boolean isDelete);
 }
