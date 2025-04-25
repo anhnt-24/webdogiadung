@@ -18,7 +18,9 @@ public class CategoryEntity extends BaseEntity<String> {
 
     @Column(unique = true)
     String name;
+
     String description;
+
     String thumbnail;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT false")

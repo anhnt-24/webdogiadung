@@ -1,25 +1,22 @@
-package web.examination.CostumeForRent.dto.request;
+package com.example.webdogiadung.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.multipart.MultipartFile;
-import java.time.LocalDate;
+
+import java.time.Instant;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountRequest {
+public class ClientResponse {
     String id;
-
-    String username;
-
     String name;
-
-    LocalDate dob;
-
-    MultipartFile avatar;
+    String email;
+    String phone;
+    Instant joinDate;
+    Double totalSpent;
 }
