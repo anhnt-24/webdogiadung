@@ -34,4 +34,7 @@ public class OrderEntity extends BaseEntity<String> {
 
     @Column(name = "is_active")
     Boolean isActive;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    Boolean isDeleted=false;
 }

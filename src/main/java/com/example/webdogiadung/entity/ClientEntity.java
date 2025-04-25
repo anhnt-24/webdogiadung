@@ -34,4 +34,7 @@ public class ClientEntity extends BaseEntity<String>{
 
     @Column(name = "total_spent")
     Double totalSpent;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    Boolean isDeleted=false;
 }

@@ -14,7 +14,7 @@ public interface OrderMapper extends BaseEntityMapper<OrderEntity, OrderRequest,
     @Override
     @Mappings({
             @Mapping(target = "id",ignore = true),
-            @Mapping(target = "client_id",ignore = true)
+            @Mapping(source = "clientId", target = "clientEntity.id")
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
@@ -24,7 +24,7 @@ public interface OrderMapper extends BaseEntityMapper<OrderEntity, OrderRequest,
     @Override
     @Mappings({
             @Mapping(target = "id",ignore = true),
-            @Mapping(target = "client_id",ignore = true)
+            @Mapping(source = "clientId", target = "clientEntity.id")
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
