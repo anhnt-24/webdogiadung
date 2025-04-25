@@ -2,14 +2,13 @@ package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.dto.request.OrderRequest;
 import com.example.webdogiadung.dto.request.search.OrderSearchRequest;
-import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.ClientEntity;
 import com.example.webdogiadung.entity.OrderEntity;
+import com.example.webdogiadung.entity.ProductEntity;
 import com.example.webdogiadung.exception.BusinessException;
-import com.example.webdogiadung.exception.DataNotFound;
+import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.OrderMapper;
 import com.example.webdogiadung.repository.ClientRepository;
 import com.example.webdogiadung.repository.OrderRepository;
@@ -29,9 +28,10 @@ public class OrderService implements OrderServiceInterface {
 
     @Override
     public OrderResponse create(OrderRequest data) {
-        clientRepository.findById(data.getClientId())
-                .orElseThrow(() -> new DataNotFound("client id not found"));
+        var clientEntity = clientRepository.findById(data.getClientId())
+                .orElseThrow(() -> new DataNotFoundException("client id not found"));
         OrderEntity orderEntity = orderMapper.toEntity(data);
+        orderEntity.setClientEntity(clientEntity);
         return orderMapper.toResponse(orderRepository.save(orderEntity));
     }
 
@@ -68,7 +68,15 @@ public class OrderService implements OrderServiceInterface {
 
     @Override
     public OrderResponse update(OrderRequest data) {
-        return null;
+        OrderEntity orderEntity = orderRepository.findById(data.getId())
+                .orElseThrow(() -> new DataNotFoundException("Giỏ hàng không tồn tại."));
+
+        var clientEntity = clientRepository.findById(data.getClientId())
+                        .orElseThrow(() -> new DataNotFoundException("client not found"));
+
+        orderMapper.updateEntity(orderEntity, data);
+        orderEntity.setClientEntity(clientEntity);
+        return orderMapper.toResponse(orderRepository.save(orderEntity));
     }
 
     @Override

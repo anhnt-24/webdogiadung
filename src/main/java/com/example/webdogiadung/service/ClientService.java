@@ -9,6 +9,7 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.entity.CategoryEntity;
 import com.example.webdogiadung.entity.ClientEntity;
 import com.example.webdogiadung.exception.BusinessException;
+import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.ClientMapper;
 import com.example.webdogiadung.repository.ClientRepository;
 import com.example.webdogiadung.service.interfa.ClientServiceInterface;
@@ -27,11 +28,8 @@ public class ClientService implements ClientServiceInterface {
 
     @Override
     public ClientResponse create(ClientRequest data) {
-        if (clientRepository.findByEmail(data.getEmail()).isPresent()) {
-            throw new BusinessException("email đã tồn tại.");
-        }
-        if (clientRepository.findByPhone(data.getPhone()).isPresent()) {
-            throw new BusinessException("phone đã tồn tại");
+        if (clientRepository.findByNameAndEmailAndPhone(data.getName(), data.getEmail(), data.getPhone()).isPresent()) {
+            throw new BusinessException("tên mail phone đã tồn tại.");
         }
         ClientEntity clientEntity = clientMapper.toEntity(data);
         return clientMapper.toResponse(clientRepository.save(clientEntity));
@@ -70,7 +68,15 @@ public class ClientService implements ClientServiceInterface {
 
     @Override
     public ClientResponse update(ClientRequest data) {
-        return null;
+        var clientEntity = clientRepository.findById(data.getId())
+                .orElseThrow(() -> new DataNotFoundException("Sản phẩm không tồn tại."));
+
+        if (clientRepository.findByNameAndEmailAndPhone(data.getName(), data.getEmail(), data.getPhone()).isPresent()) {
+            throw new BusinessException("tên mail phone đã tồn tại.");
+        }
+
+        clientMapper.updateEntity(clientEntity, data);
+        return clientMapper.toResponse(clientRepository.save(clientEntity));
     }
 
     @Override

@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<ClientEntity, String>, JpaSpecificationExecutor<ClientEntity> {
-    Optional<ClientEntity> findByEmail(String email);
-    Optional<ClientEntity> findByPhone(String phone);
+    Optional<ClientEntity> findByNameAndEmailAndPhone(String name, String email, String phone);
 }

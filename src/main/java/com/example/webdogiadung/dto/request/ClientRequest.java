@@ -15,6 +15,7 @@ import java.time.Instant;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ClientRequest {
+    String id;
 
     @JsonProperty("name")
     @NotBlank(message = "name is required")
