@@ -34,4 +34,6 @@ public class ProductRequest {
     Long importPrice;
 
     Boolean isDeleted;
+
+    Long stock;
 }

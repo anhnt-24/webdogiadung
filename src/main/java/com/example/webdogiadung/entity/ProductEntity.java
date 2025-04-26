@@ -44,4 +44,9 @@ public class ProductEntity extends BaseEntity<String> {
     @Column(name = "is_deleted")
     Boolean isDeleted=false;
 
+    Long stock;
+    Double rating;
+
+
+
 }

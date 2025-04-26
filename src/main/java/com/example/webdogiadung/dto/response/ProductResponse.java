@@ -21,8 +21,12 @@ public class ProductResponse {
     String brand;
     Long sellingPrice;
     String thumbnail;
+    String categoryId;
     Long promotionPrice;
     Long sold;
     Long importPrice;
     Boolean isDeleted;
+    Long stock;
+    Double rating;
+
 }

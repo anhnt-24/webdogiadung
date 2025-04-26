@@ -5,9 +5,11 @@ import com.example.webdogiadung.dto.request.search.ProductSearchRequest;
 import com.example.webdogiadung.dto.response.ProductResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
+import com.example.webdogiadung.entity.CategoryEntity;
 import com.example.webdogiadung.entity.ProductEntity;
 import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.mapper.ProductMapper;
+import com.example.webdogiadung.repository.CategoryRepository;
 import com.example.webdogiadung.repository.ProductRepository;
 import com.example.webdogiadung.service.interfa.ProductServiceInterface;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService implements ProductServiceInterface {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
     private final CloudinaryService cloudinaryService;
 
@@ -31,7 +34,9 @@ public class ProductService implements ProductServiceInterface {
         if (productRepository.findByName(data.getName()).isPresent()) {
             throw new BusinessException("Sản phẩm đã tồn tại.");
         }
+        CategoryEntity categoryEntity=categoryRepository.findById(data.getCategoryId()).orElseThrow(()->new BusinessException("Danh mục không tồn tại."));
         ProductEntity productEntity = productMapper.toEntity(data);
+        productEntity.setCategory(categoryEntity);
         String imgUrl = (String) cloudinaryService.upload(data.getThumbnail()).get("secure_url");
         productEntity.setThumbnail(imgUrl);
         return productMapper.toResponse(productRepository.save(productEntity));
@@ -52,9 +57,10 @@ public class ProductService implements ProductServiceInterface {
 
     @Override
     public ProductResponse getById(String id) {
-        return productRepository.findById(id)
-                .map(productMapper::toResponse)
-                .orElseThrow(() -> new BusinessException("Sản phẩm không tồn tại."));
+        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+        ProductResponse productResponse = productMapper.toResponse(productEntity);
+        productResponse.setCategoryId(productEntity.getCategory().getId());
+        return productResponse;
     }
 
     @Override

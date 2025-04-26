@@ -8,11 +8,11 @@ import java.util.List;
 public interface BaseControllerInterface<SearchReq,Req,Res,ID>{
 
     @PostMapping("create")
-    ApiResponse<Res> create(@RequestBody  Req request);
+    ApiResponse<Res> create(Req request);
 
 
     @PostMapping("create")
-    ApiResponse<Res> update(@RequestBody Req request);
+    ApiResponse<Res> update(Req request);
 
     @PostMapping("/get/all")
     ApiResponse<PagingResponse<Res>> getAll( @RequestBody SearchReq request);

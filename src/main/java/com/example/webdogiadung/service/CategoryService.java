@@ -3,6 +3,7 @@ package com.example.webdogiadung.service;
 import com.example.webdogiadung.dto.request.CategoryRequest;
 import com.example.webdogiadung.dto.request.search.CategorySearchRequest;
 import com.example.webdogiadung.dto.response.CategoryResponse;
+import com.example.webdogiadung.dto.response.SearchResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.entity.CategoryEntity;
@@ -109,4 +110,11 @@ public class CategoryService implements CategoryServiceInterface {
         });
         return "Khôi phục thành công.";
     }
+
+    @Override
+    public List<SearchResponse> getAllForSelect() {
+        return categoryRepository.findAllForSelect();
+    }
+
+
 }
