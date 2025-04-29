@@ -10,13 +10,11 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ClientResponse {
     String id;
     String name;
     String email;
     String phone;
-    Instant joinDate;
     Double totalSpent;
 }

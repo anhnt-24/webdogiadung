@@ -1,9 +1,7 @@
-package com.example.webdogiadung.entity.Constants;
+package com.example.webdogiadung.constants;
 
 public enum OrderStatus {
-    PENDING,
-    APPROVED,
+    PROCESSING,
+    COMPLETED,
     CANCELLED,
-    DELIVERED,
-    ONDELIVERY
 }

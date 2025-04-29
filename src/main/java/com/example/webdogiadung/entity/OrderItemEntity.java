@@ -1,7 +1,7 @@
 package com.example.webdogiadung.entity;
 
-import com.example.webdogiadung.entity.Constants.OrderStatus;
 
+import com.example.webdogiadung.constants.OrderItemStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class OrderItemEntity extends BaseEntity<String>{
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    ProductEntity productEntity;
+    ProductEntity product;
 
     @Column(name = "quantity")
     Long quantity;
@@ -38,13 +38,8 @@ public class OrderItemEntity extends BaseEntity<String>{
     @Column(name = "total_price")
     Double totalPrice;
 
-    @Column(name = "delivery_address")
-    String deliveryAddress;
-
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    OrderStatus orderStatus;
+    OrderItemStatus orderStatus;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
-    Boolean isDeleted=false;
 }

@@ -1,6 +1,7 @@
 package com.example.webdogiadung.entity;
 
 import com.example.webdogiadung.constants.MethodPayment;
+import com.example.webdogiadung.constants.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class OrderEntity extends BaseEntity<String> {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    ClientEntity clientEntity;
+    ClientEntity client;
 
     @Column(name = "order_code", nullable = false)
     String orderCode;
@@ -32,9 +33,11 @@ public class OrderEntity extends BaseEntity<String> {
     @Column(name = "total_amount")
     Double totalAmount;
 
-    @Column(name = "is_active")
-    Boolean isActive;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    OrderStatus status;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
-    Boolean isDeleted=false;
+    @Column(name = "delivery_address")
+    String deliveryAddress;
+
 }

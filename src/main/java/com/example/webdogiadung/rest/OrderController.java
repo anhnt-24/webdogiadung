@@ -9,10 +9,7 @@ import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class OrderController implements BaseControllerInterface<OrderSearchReque
 
     @Override
     @PostMapping(value = "create")
-    public ApiResponse<OrderResponse> create(OrderRequest request) {
+    public ApiResponse<OrderResponse> create(@RequestBody OrderRequest request) {
         return ApiResponse.<OrderResponse>builder()
                 .status(Status.OK)
                 .data(orderService.create(request))
@@ -34,7 +31,7 @@ public class OrderController implements BaseControllerInterface<OrderSearchReque
 
     @Override
     @PutMapping(value = "update")
-    public ApiResponse<OrderResponse> update(OrderRequest request) {
+    public ApiResponse<OrderResponse> update(@RequestBody  OrderRequest request) {
         return ApiResponse.<OrderResponse>builder()
                 .status(Status.UPDATED)
                 .data(orderService.update(request))

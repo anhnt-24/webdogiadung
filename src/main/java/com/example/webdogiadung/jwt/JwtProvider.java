@@ -1,5 +1,6 @@
 package com.example.webdogiadung.jwt;
 
+import com.example.webdogiadung.config.security.UserDetailsCustom;
 import com.example.webdogiadung.properties.JwtProperties;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -36,8 +37,9 @@ public class JwtProvider {
     public String createAccessToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
+        UserDetailsCustom userDetails = (UserDetailsCustom) authentication.getPrincipal();
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .issuer(authentication.getPrincipal().toString())
+                .issuer(userDetails.getUsername())
                 .issueTime(new Date())
                 .claim(AUTHORITIES_KEY,authorities)
                 .expirationTime(new Date(Instant.now().plus(jwtProperties.getExpireTime(), ChronoUnit.SECONDS).toEpochMilli()))
@@ -80,7 +82,6 @@ public class JwtProvider {
             throw new RuntimeException(e);
         }
         String token=jwsObject.serialize();
-//        RefreshTokenEntity refreshTokenEntity=new RefreshTokenEntity();
         return token;
     }
 
@@ -111,6 +112,7 @@ public class JwtProvider {
                   .map(SimpleGrantedAuthority::new)
                   .collect(Collectors.toList());
           User principal = new User(claims.getIssuer(), "", authorities);
+
           return new UsernamePasswordAuthenticationToken(principal, token, authorities);
       }
 

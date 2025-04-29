@@ -29,12 +29,8 @@ public class ClientEntity extends BaseEntity<String>{
     @Column(name = "phone", nullable = false)
     String phone;
 
-    @Column(name = "join_date", nullable = false)
-    Instant joinDate;
-
     @Column(name = "total_spent")
     Double totalSpent;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
-    Boolean isDeleted=false;
+    Long numOrder;
 }

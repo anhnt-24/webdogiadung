@@ -29,10 +29,6 @@ public class ClientRequest {
     @NotBlank(message = "phone is required")
     String phone;
 
-    @JsonProperty("join_date")
-    @NotBlank(message = "join date is required")
-    Instant joinDate;
-
     @JsonProperty("total_spent")
     Double totalSpent;
 }

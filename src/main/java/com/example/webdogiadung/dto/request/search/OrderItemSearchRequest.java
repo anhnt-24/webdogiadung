@@ -5,16 +5,10 @@ import com.example.webdogiadung.repository.specification.OrderItemSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
 public class OrderItemSearchRequest extends FilteringRequest<OrderItemEntity>{
-    String name;
-    String description;
-    Boolean isDeleted ;
 
     @Override
     public Specification<OrderItemEntity> specification() {
         return OrderItemSpecification.builder()
-                .withIsDeleted(isDeleted)
-                .withName(name)
-                .withDescription(description)
                 .build();
     }
 }

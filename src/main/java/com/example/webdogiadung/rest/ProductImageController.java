@@ -4,7 +4,7 @@ import com.example.webdogiadung.constants.Status;
 import com.example.webdogiadung.dto.request.ProductImageRequest;
 import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.ProductImageResponse;
-import com.example.webdogiadung.service.impl.ProductImageService;
+import com.example.webdogiadung.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

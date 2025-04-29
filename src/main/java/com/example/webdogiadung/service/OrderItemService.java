@@ -37,7 +37,7 @@ public class OrderItemService implements OrderItemServiceInterface {
                 .orElseThrow(() -> new DataNotFoundException("order not found"));
 
         OrderItemEntity orderItemEntity = orderItemMapper.toEntity(data);
-        orderItemEntity.setProductEntity(productEntity);
+        orderItemEntity.setProduct(productEntity);
         orderItemEntity.setOrderEntity(orderEntity);
         return orderItemMapper.toResponse(orderItemRepository.save(orderItemEntity));
     }
@@ -66,7 +66,6 @@ public class OrderItemService implements OrderItemServiceInterface {
             orderItemRepository.deleteById(id);
         } else {
             orderItemRepository.findById(id).ifPresent(orderItemEntity -> {
-                orderItemEntity.setIsDeleted(true);
                 orderItemRepository.save(orderItemEntity);
             });
         }
@@ -77,16 +76,8 @@ public class OrderItemService implements OrderItemServiceInterface {
     public OrderItemResponse update(OrderItemRequest data) {
         var orderItemEntity = orderItemRepository.findById(data.getId())
                 .orElseThrow(() -> new DataNotFoundException("Sản phẩm không tồn tại."));
-
-        var orderEntity = orderRepository.findById(data.getOrderId())
-                        .orElseThrow(() -> new DataNotFoundException("Order not found"));
-
-        var productEntity = productRepository.findById(data.getProductId())
-                        .orElseThrow(() -> new DataNotFoundException("product not found"));
-
-        orderItemMapper.updateEntity(orderItemEntity, data);
-        orderItemEntity.setOrderEntity(orderEntity);
-        orderItemEntity.setProductEntity(productEntity);
+        orderItemMapper.updateEntity(orderItemEntity,data);
+        orderItemRepository.save(orderItemEntity);
         return orderItemMapper.toResponse(orderItemRepository.save(orderItemEntity));
     }
 
@@ -94,4 +85,5 @@ public class OrderItemService implements OrderItemServiceInterface {
     public String deleteByListId(List<String> listId, boolean isDelete) {
         return "";
     }
+
 }

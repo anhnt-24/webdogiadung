@@ -110,4 +110,15 @@ public class ProductService implements ProductServiceInterface {
         }
         return "Xóa thành công.";
     }
+
+
+
+    @Override
+    public String restore(List<String> listId) {
+        List<ProductEntity> productEntityList=productRepository.findAllById(listId);
+        productEntityList.stream().forEach(productEntity -> {
+                    productEntity.setIsDeleted(false);
+                    productRepository.save(productEntity);});
+        return "Khôi phục thành công.";
+    }
 }

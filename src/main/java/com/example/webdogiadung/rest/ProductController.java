@@ -9,10 +9,7 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -66,6 +63,14 @@ public class ProductController implements BaseControllerInterface<ProductSearchR
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data(productService.deleteByListId(listId, isDeleted))
+                .build();
+    }
+
+    @PutMapping("restore")
+    public ApiResponse<String> restore(@RequestBody List<String> listId){
+        return ApiResponse.<String>builder()
+                .status(Status.UPDATED)
+                .data(productService.restore(listId))
                 .build();
     }
 

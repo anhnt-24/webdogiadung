@@ -24,6 +24,6 @@ public interface BaseControllerInterface<SearchReq,Req,Res,ID>{
     default ApiResponse<String> deleteById(@PathVariable(value = "id") ID id,@PathVariable("isDeleted") boolean isDeleted){return null;};
 
     @DeleteMapping("/delete/{isDeleted}")
-    ApiResponse<String> deleteByListId(@RequestBody List<ID> listId,@PathVariable boolean isDeleted);
+    default ApiResponse<String> deleteByListId(@RequestBody List<ID> listId,@PathVariable boolean isDeleted){return null;};
 
 }

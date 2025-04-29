@@ -1,5 +1,6 @@
-package web.examination.CostumeForRent.dto.request;
+package com.example.webdogiadung.dto.request;
 
+import com.example.webdogiadung.constants.Role;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,12 +15,10 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountRequest {
     String id;
-
-    String username;
-
     String name;
-
-    LocalDate dob;
-
+    String phone;
+    String email;
+    String password;
+    Role role;
     MultipartFile avatar;
 }

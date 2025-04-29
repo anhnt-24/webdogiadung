@@ -1,6 +1,7 @@
 package com.example.webdogiadung.dto.request;
 
 import com.example.webdogiadung.constants.MethodPayment;
+import com.example.webdogiadung.constants.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -24,7 +25,6 @@ public class OrderRequest {
     String orderCode;
 
     @JsonProperty("client_id")
-    @NotBlank(message = "client id is required")
     String clientId;
 
     @JsonProperty("delivery_fee")
@@ -33,6 +33,9 @@ public class OrderRequest {
     @JsonProperty("total_amount")
     Double totalAmount;
 
-    @JsonProperty("is_active")
-    Boolean isActive;
+    @JsonProperty("delivery_address")
+    String deliveryAddress;
+
+    @JsonProperty("status")
+    OrderStatus status;
 }

@@ -2,6 +2,7 @@ package com.example.webdogiadung.config;
 
 import com.example.webdogiadung.config.security.SetAuthentication;
 import com.example.webdogiadung.config.security.SupportHandleException;
+import com.example.webdogiadung.config.security.UserDetailsServiceCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +35,7 @@ public class SecurityConfiguration {
 
     private final SupportHandleException supportHandleException;
     private final SetAuthentication setAuthentication;
-//    private final UserDetailsServiceCustom userDetailsService;
-//
+    private final UserDetailsServiceCustom userDetailsService;
 
 
 
@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().permitAll())
-//               .authenticationManager(authenticationManager())
+               .authenticationManager(authenticationManager())
                         .
                 headers(
                         headersConfigurer ->
@@ -83,23 +83,23 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() throws Exception {
-//        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
-//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return daoAuthenticationProvider;
-//    }
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager() throws Exception {
-//        return new ProviderManager(authenticationProvider());
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(10);
-//    }
+    @Bean
+    public AuthenticationProvider authenticationProvider() throws Exception {
+        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return new ProviderManager(authenticationProvider());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

@@ -9,10 +9,7 @@ import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class OrderItemController implements BaseControllerInterface<OrderItemSea
 
     @Override
     @PostMapping(value = "create")
-    public ApiResponse<OrderItemResponse> create(OrderItemRequest request) {
+    public ApiResponse<OrderItemResponse> create(@RequestBody OrderItemRequest request) {
         return ApiResponse.<OrderItemResponse>builder()
                 .status(Status.OK)
                 .data(orderItemService.create(request))
@@ -35,7 +32,7 @@ public class OrderItemController implements BaseControllerInterface<OrderItemSea
 
     @Override
     @PutMapping(value = "update")
-    public ApiResponse<OrderItemResponse> update(OrderItemRequest request) {
+    public ApiResponse<OrderItemResponse> update(@RequestBody OrderItemRequest request) {
         return ApiResponse.<OrderItemResponse>builder()
                 .status(Status.UPDATED)
                 .data(orderItemService.update(request))

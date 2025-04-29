@@ -1,6 +1,7 @@
 package com.example.webdogiadung.dto.request;
 
-import com.example.webdogiadung.entity.Constants.OrderStatus;
+import com.example.webdogiadung.constants.OrderItemStatus;
+import com.example.webdogiadung.constants.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,23 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderItemRequest {
     String id;
 
-    @JsonProperty("order_id")
     String orderId;
 
-    @JsonProperty("product_id")
     String productId;
 
     Long quantity;
 
-    @JsonProperty("unit_price")
-    Double unitPrice;
-
-    @JsonProperty("total_price")
     Double totalPrice;
 
-    @JsonProperty("delivery_address")
-    String deliveryAddress;
-
-    @JsonProperty("status")
-    OrderStatus orderStatus;
+    OrderItemStatus orderStatus;
 }

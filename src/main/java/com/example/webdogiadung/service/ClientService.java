@@ -59,7 +59,6 @@ public class ClientService implements ClientServiceInterface {
             clientRepository.deleteById(id);
         } else {
             clientRepository.findById(id).ifPresent(clientEntity -> {
-                clientEntity.setIsDeleted(true);
                 clientRepository.save(clientEntity);
             });
         }

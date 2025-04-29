@@ -1,6 +1,7 @@
 package com.example.webdogiadung.dto.response;
 
-import com.example.webdogiadung.entity.Constants.OrderStatus;
+import com.example.webdogiadung.constants.OrderItemStatus;
+import com.example.webdogiadung.constants.OrderStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +14,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderItemResponse {
     String id;
-    OrderResponse orderResponse;
-    ProductResponse productResponse;
+    ProductResponse product;
     Long quantity;
-    Double unitPrice;
     Double totalPrice;
-    String deliveryAddress;
-    OrderStatus orderStatus;
+    OrderItemStatus orderStatus;
 }

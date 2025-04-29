@@ -12,8 +12,6 @@ public interface OrderItemMapper extends BaseEntityMapper<OrderItemEntity, Order
     @Override
     @Mappings({
             @Mapping(target = "id",ignore = true),
-//            @Mapping(target = "order_id",ignore = true),
-//            @Mapping(target = "product_id", ignore = true),
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS

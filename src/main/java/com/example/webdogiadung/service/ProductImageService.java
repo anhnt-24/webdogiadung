@@ -1,4 +1,4 @@
-package com.example.webdogiadung.service.impl;
+package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.dto.request.ProductImageRequest;
 import com.example.webdogiadung.dto.response.ProductImageResponse;

@@ -31,7 +31,7 @@ public class OrderService implements OrderServiceInterface {
         var clientEntity = clientRepository.findById(data.getClientId())
                 .orElseThrow(() -> new DataNotFoundException("client id not found"));
         OrderEntity orderEntity = orderMapper.toEntity(data);
-        orderEntity.setClientEntity(clientEntity);
+        orderEntity.setClient(clientEntity);
         return orderMapper.toResponse(orderRepository.save(orderEntity));
     }
 
@@ -59,7 +59,6 @@ public class OrderService implements OrderServiceInterface {
             orderRepository.deleteById(id);
         } else {
             orderRepository.findById(id).ifPresent(orderEntity -> {
-                orderEntity.setIsDeleted(true);
                 orderRepository.save(orderEntity);
             });
         }
@@ -69,13 +68,9 @@ public class OrderService implements OrderServiceInterface {
     @Override
     public OrderResponse update(OrderRequest data) {
         OrderEntity orderEntity = orderRepository.findById(data.getId())
-                .orElseThrow(() -> new DataNotFoundException("Giỏ hàng không tồn tại."));
-
-        var clientEntity = clientRepository.findById(data.getClientId())
-                        .orElseThrow(() -> new DataNotFoundException("client not found"));
-
+                .orElseThrow(() -> new DataNotFoundException("Đơn hàng không tồn tại."));
         orderMapper.updateEntity(orderEntity, data);
-        orderEntity.setClientEntity(clientEntity);
+        orderRepository.save(orderEntity);
         return orderMapper.toResponse(orderRepository.save(orderEntity));
     }
 
