@@ -6,22 +6,21 @@ import com.example.webdogiadung.dto.request.search.GuestSearchRequest;
 import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.GuestResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.service.GuessService;
+import com.example.webdogiadung.service.GuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/guest/")
 @RequiredArgsConstructor
 public class GuestController implements BaseControllerInterface<GuestSearchRequest, GuestRequest, GuestResponse, String> {
-    private final GuessService guessService;
+    private final GuestService guessService;
     @Override
     @PostMapping("create")
-    public ApiResponse<GuestResponse> create(GuestRequest request) {
+    public ApiResponse<GuestResponse> create(@RequestBody GuestRequest request) {
         return ApiResponse.<GuestResponse>builder()
                 .status(Status.CREATED)
                 .data(guessService.create(request))
@@ -30,7 +29,7 @@ public class GuestController implements BaseControllerInterface<GuestSearchReque
 
     @Override
     @PostMapping("update")
-    public ApiResponse<GuestResponse> update(GuestRequest request) {
+    public ApiResponse<GuestResponse> update(@RequestBody GuestRequest request) {
         return null;
     }
 
@@ -48,5 +47,13 @@ public class GuestController implements BaseControllerInterface<GuestSearchReque
                 .status(Status.DELETED)
                 .data("Xóa thành công. ")
                     .build();
+    }
+
+    @Override
+    public ApiResponse<GuestResponse> getById(String id) {
+        return ApiResponse.<GuestResponse>builder()
+                .status(Status.OK)
+                .data(guessService.getById(id))
+                .build();
     }
 }

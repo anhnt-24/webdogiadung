@@ -1,5 +1,7 @@
 package com.example.webdogiadung.service;
 
+import com.example.webdogiadung.Utils.RandomCodeGenerate;
+import com.example.webdogiadung.constants.MethodPayment;
 import com.example.webdogiadung.dto.request.OrderRequest;
 import com.example.webdogiadung.dto.request.search.OrderSearchRequest;
 import com.example.webdogiadung.dto.response.OrderResponse;
@@ -13,10 +15,12 @@ import com.example.webdogiadung.mapper.OrderMapper;
 import com.example.webdogiadung.repository.ClientRepository;
 import com.example.webdogiadung.repository.OrderRepository;
 import com.example.webdogiadung.service.interfa.OrderServiceInterface;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -25,16 +29,17 @@ public class OrderService implements OrderServiceInterface {
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;
     private final OrderMapper orderMapper;
-
+    private final PaymentService paymentService;
     @Override
     public OrderResponse create(OrderRequest data) {
+
         var clientEntity = clientRepository.findById(data.getClientId())
                 .orElseThrow(() -> new DataNotFoundException("client id not found"));
         OrderEntity orderEntity = orderMapper.toEntity(data);
         orderEntity.setClient(clientEntity);
+        orderEntity.setOrderCode(RandomCodeGenerate.generateOrderCode());
         return orderMapper.toResponse(orderRepository.save(orderEntity));
     }
-
     @Override
     public PagingResponse<OrderResponse> getAll(OrderSearchRequest request) {
         Page<OrderEntity> orderEntityPage=orderRepository.findAll(request.specification(),request.getPaging().pageable());
@@ -78,4 +83,6 @@ public class OrderService implements OrderServiceInterface {
     public String deleteByListId(List<String> listId, boolean isDelete) {
         return "";
     }
+
+
 }

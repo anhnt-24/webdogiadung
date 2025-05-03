@@ -21,21 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderRequest {
     String id;
 
-    @JsonProperty("order_code")
     String orderCode;
 
-    @JsonProperty("client_id")
     String clientId;
 
-    @JsonProperty("delivery_fee")
     Double deliveryFee;
 
-    @JsonProperty("total_amount")
     Double totalAmount;
 
-    @JsonProperty("delivery_address")
     String deliveryAddress;
 
-    @JsonProperty("status")
     OrderStatus status;
+
+    MethodPayment methodPayment;
 }

@@ -15,10 +15,11 @@ public class CategorySpecification extends BaseSpecification<CategoryEntity>  {
     public CategorySpecification withName(String name) {
         if (!ObjectUtils.isEmpty(name)) {
             this.specifications.add((root, query, cb) ->
-                    cb.like(root.get(NAME), "%" + name + "%"));
+                    cb.like(cb.lower(root.get(NAME)), "%" + name.toLowerCase() + "%"));
         }
         return this;
     }
+
 
     public CategorySpecification withDescription(String description) {
         if (!ObjectUtils.isEmpty(description)) {

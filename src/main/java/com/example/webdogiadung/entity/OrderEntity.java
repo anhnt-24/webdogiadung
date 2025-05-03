@@ -40,4 +40,7 @@ public class OrderEntity extends BaseEntity<String> {
     @Column(name = "delivery_address")
     String deliveryAddress;
 
+    @Enumerated(EnumType.STRING)
+    MethodPayment methodPayment;
+
 }

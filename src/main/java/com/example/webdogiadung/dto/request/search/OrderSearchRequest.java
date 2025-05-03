@@ -14,11 +14,12 @@ import org.springframework.data.jpa.domain.Specification;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderSearchRequest extends FilteringRequest<OrderEntity>{
     String orderCode;
-
+    String clientId;
     @Override
     public Specification<OrderEntity> specification() {
         return OrderSpecification.builder()
                 .withOrderCode(orderCode)
+                .withClientId(clientId)
                 .build();
     }
 }

@@ -32,9 +32,6 @@ public class OrderItemEntity extends BaseEntity<String>{
     @Column(name = "quantity")
     Long quantity;
 
-    @Column(name = "unit_price")
-    Double unitPrice;
-
     @Column(name = "total_price")
     Double totalPrice;
 

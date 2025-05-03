@@ -17,4 +17,6 @@ public class ClientResponse {
     String email;
     String phone;
     Double totalSpent;
+    Instant createdDate;
+    Long numOrder;
 }

@@ -23,7 +23,6 @@ public class ClientEntity extends BaseEntity<String>{
     @Column(name = "name", nullable = false)
     String name;
 
-    @Column(name = "email", nullable = false)
     String email;
 
     @Column(name = "phone", nullable = false)

@@ -1,6 +1,9 @@
 package com.example.webdogiadung.Utils;
 
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 public class RandomCodeGenerate {
 
@@ -19,5 +22,12 @@ public class RandomCodeGenerate {
             password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
         }
         return password.toString();
+    }
+    public static String generateOrderCode() {
+        String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+
+        String randomPart = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toUpperCase();
+
+        return "ORD" + date + "-" + randomPart;
     }
 }

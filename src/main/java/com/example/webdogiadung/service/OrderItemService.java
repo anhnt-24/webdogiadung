@@ -8,6 +8,7 @@ import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.entity.OrderEntity;
 import com.example.webdogiadung.entity.OrderItemEntity;
+import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.OrderItemMapper;
 import com.example.webdogiadung.repository.OrderItemRepository;
@@ -36,6 +37,11 @@ public class OrderItemService implements OrderItemServiceInterface {
         var orderEntity = orderRepository.findById(data.getOrderId())
                 .orElseThrow(() -> new DataNotFoundException("order not found"));
 
+        if(productEntity.getStock()<data.getQuantity()){
+            throw new BusinessException("Không đủ số lượng sản phẩm.");
+        }
+        productEntity.setStock(productEntity.getStock()-data.getQuantity());
+        productRepository.save(productEntity);
         OrderItemEntity orderItemEntity = orderItemMapper.toEntity(data);
         orderItemEntity.setProduct(productEntity);
         orderItemEntity.setOrderEntity(orderEntity);

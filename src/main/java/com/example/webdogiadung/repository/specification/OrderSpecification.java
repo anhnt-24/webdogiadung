@@ -8,6 +8,7 @@ public class OrderSpecification extends BaseSpecification<OrderEntity>{
     private final String DESCRIPTION = "description";
     private final String IS_DELETED = "isDeleted";
     private final String ORDER_CODE = "orderCode";
+    private final String CLIENT="client";
     public static OrderSpecification builder() {
         return new OrderSpecification();
     }
@@ -40,6 +41,13 @@ public class OrderSpecification extends BaseSpecification<OrderEntity>{
         if (!ObjectUtils.isEmpty(orderCode)) {
             this.specifications.add((root, query, cb) ->
                     cb.like(root.get(ORDER_CODE), "%" + orderCode + "%"));
+        }
+        return this;
+    }
+    public OrderSpecification withClientId(String clientId) {
+        if (!ObjectUtils.isEmpty(clientId)) {
+            this.specifications.add((root, query, cb) ->
+                    cb.equal(root.get(CLIENT).get("id"), clientId));
         }
         return this;
     }

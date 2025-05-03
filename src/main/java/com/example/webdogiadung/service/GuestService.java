@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GuessService implements GuessServiceInterface {
+public class GuestService implements GuessServiceInterface {
     private final GuestRepository guessRepository;
     private final GuestMapper guestMapper;
 

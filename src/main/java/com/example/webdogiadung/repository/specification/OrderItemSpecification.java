@@ -7,6 +7,7 @@ public class OrderItemSpecification extends BaseSpecification<OrderItemEntity>{
     private final String NAME = "name";
     private final String DESCRIPTION = "description";
     private final String IS_DELETED = "isDeleted";
+    private final String ORDER = "orderEntity";
 
     public static OrderItemSpecification builder() {
         return new OrderItemSpecification();
@@ -35,5 +36,12 @@ public class OrderItemSpecification extends BaseSpecification<OrderItemEntity>{
         }
         return this;
 
+    }
+    public OrderItemSpecification withOrderCode(String id) {
+        if (!ObjectUtils.isEmpty(id)) {
+            this.specifications.add((root, query, cb) ->
+                    cb.equal(root.join(ORDER).get("id"), id ));
+        }
+        return this;
     }
 }

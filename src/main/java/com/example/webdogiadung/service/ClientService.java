@@ -28,10 +28,11 @@ public class ClientService implements ClientServiceInterface {
 
     @Override
     public ClientResponse create(ClientRequest data) {
-        if (clientRepository.findByNameAndEmailAndPhone(data.getName(), data.getEmail(), data.getPhone()).isPresent()) {
-            throw new BusinessException("tên mail phone đã tồn tại.");
+        ClientEntity clientEntity=clientRepository.findByNameAndEmailAndPhone(data.getName(), data.getEmail(), data.getPhone()).orElse(null);
+        if (clientEntity!=null) {
+            return clientMapper.toResponse(clientEntity);
         }
-        ClientEntity clientEntity = clientMapper.toEntity(data);
+        clientEntity = clientMapper.toEntity(data);
         return clientMapper.toResponse(clientRepository.save(clientEntity));
     }
 

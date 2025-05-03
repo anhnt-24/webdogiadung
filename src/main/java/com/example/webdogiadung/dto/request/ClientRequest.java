@@ -22,7 +22,6 @@ public class ClientRequest {
     String name;
 
     @JsonProperty("email")
-    @NotBlank(message = "email is required")
     String email;
 
     @JsonProperty("phone")

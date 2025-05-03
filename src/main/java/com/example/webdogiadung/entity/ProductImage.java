@@ -18,6 +18,7 @@ public class ProductImage extends BaseEntity<String> {
     String id;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     ProductEntity productEntity;
 
     String name;

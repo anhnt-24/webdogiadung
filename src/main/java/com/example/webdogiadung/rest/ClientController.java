@@ -11,10 +11,7 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class ClientController implements BaseControllerInterface<ClientSearchReq
 
     @Override
     @PostMapping(value = "create")
-    public ApiResponse<ClientResponse> create(ClientRequest request) {
+    public ApiResponse<ClientResponse> create(@RequestBody ClientRequest request) {
         return ApiResponse.<ClientResponse>builder()
                 .status(Status.OK)
                 .data(clientService.create(request))
@@ -36,7 +33,7 @@ public class ClientController implements BaseControllerInterface<ClientSearchReq
 
     @Override
     @PutMapping(value = "update")
-    public ApiResponse<ClientResponse> update(ClientRequest request) {
+    public ApiResponse<ClientResponse> update(@RequestBody ClientRequest request) {
         return ApiResponse.<ClientResponse>builder()
                 .status(Status.UPDATED)
                 .data(clientService.update(request))
