@@ -16,6 +16,8 @@ public class ProductSearchRequest extends FilteringRequest<ProductEntity>{
     String name;
     String categoryId;
     Boolean isDeleted;
+    Long minPrice;
+    Long maxPrice;
 
     @Override
     public Specification<ProductEntity> specification() {
@@ -23,6 +25,7 @@ public class ProductSearchRequest extends FilteringRequest<ProductEntity>{
                 .withCategoryId(categoryId)
                 .withName(name)
                 .withIsDeleted(isDeleted)
+                .withPrice(minPrice, maxPrice)
                 .build();
     }
 }
