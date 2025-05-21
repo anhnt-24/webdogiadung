@@ -5,10 +5,10 @@ import com.example.webdogiadung.dto.request.OrderItemRequest;
 import com.example.webdogiadung.dto.request.search.OrderItemSearchRequest;
 import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.OrderItemResponse;
-import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/order-item/")
 @RequiredArgsConstructor
-public class OrderItemController implements BaseControllerInterface<OrderItemSearchRequest, OrderItemRequest, OrderItemResponse, String>{
+public class OrderItemController {
 
     private final OrderItemService orderItemService;
 
-
-    @Override
     @PostMapping(value = "create")
     public ApiResponse<OrderItemResponse> create(@RequestBody OrderItemRequest request) {
         return ApiResponse.<OrderItemResponse>builder()
@@ -30,7 +28,7 @@ public class OrderItemController implements BaseControllerInterface<OrderItemSea
                 .build();
     }
 
-    @Override
+
     @PutMapping(value = "update")
     public ApiResponse<OrderItemResponse> update(@RequestBody OrderItemRequest request) {
         return ApiResponse.<OrderItemResponse>builder()
@@ -38,33 +36,20 @@ public class OrderItemController implements BaseControllerInterface<OrderItemSea
                 .data(orderItemService.update(request))
                 .build();
     }
-
-    @Override
-    public ApiResponse<PagingResponse<OrderItemResponse>> getAll(OrderItemSearchRequest request) {
+    @PostMapping("get/all")
+    public ApiResponse<PagingResponse<OrderItemResponse>> getAll(@RequestBody OrderItemSearchRequest request) {
         return ApiResponse.<PagingResponse<OrderItemResponse>>builder()
                 .status(Status.OK)
                 .data(orderItemService.getAll(request))
                 .build();
     }
 
-    @Override
-    public ApiResponse<OrderItemResponse> getById(String id) {
+    @GetMapping("get/{id}")
+    public ApiResponse<OrderItemResponse> getById(@PathVariable String id) {
         return ApiResponse.<OrderItemResponse>builder()
                 .status(Status.OK)
                 .data(orderItemService.getById(id))
                 .build();
     }
 
-    @Override
-    public ApiResponse<String> deleteById(String id, boolean isDeleted) {
-        return ApiResponse.<String>builder()
-                .status(Status.DELETED)
-                .data(orderItemService.deleteById(id,isDeleted))
-                .build();
-    }
-
-    @Override
-    public ApiResponse<String> deleteByListId(List<String> listId, boolean isDeleted) {
-        return null;
-    }
 }

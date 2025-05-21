@@ -1,6 +1,7 @@
 package com.example.webdogiadung.jwt;
 
 import com.example.webdogiadung.config.security.UserDetailsCustom;
+import com.example.webdogiadung.entity.AccountEntity;
 import com.example.webdogiadung.properties.JwtProperties;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -62,8 +63,9 @@ public class JwtProvider {
     public String createRefreshToken(Authentication authentication) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS384);
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        UserDetailsCustom userDetails = (UserDetailsCustom) authentication.getPrincipal();
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .issuer(authentication.getPrincipal().toString())
+                .issuer(userDetails.getUsername())
                 .claim(AUTHORITIES_KEY,authorities)
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(jwtProperties.getRefreshTime(), ChronoUnit.SECONDS).toEpochMilli()))
@@ -111,9 +113,21 @@ public class JwtProvider {
                   .map("ROLE_"::concat)
                   .map(SimpleGrantedAuthority::new)
                   .collect(Collectors.toList());
-          User principal = new User(claims.getIssuer(), "", authorities);
-
+          User  principal = new User(claims.getIssuer(), "", authorities);
           return new UsernamePasswordAuthenticationToken(principal, token, authorities);
       }
+    public Authentication getAuthenticationForRefresh(String token){
+        JWTClaimsSet claims=this.verify(token);
+        Collection<? extends GrantedAuthority> authorities = Arrays
+                .stream(claims.getClaims().get(AUTHORITIES_KEY).toString().split(","))
+                .filter(auth -> !auth.trim().isEmpty())
+                .map("ROLE_"::concat)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        AccountEntity accountEntity=new AccountEntity();
+        accountEntity.setEmail(claims.getIssuer());
+        UserDetailsCustom principal = new UserDetailsCustom(new AccountEntity());
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
 
 }

@@ -90,8 +90,8 @@ public class AccountService implements AccountServiceInterface {
 
     @Override
     public LoginResponse refresh(HttpServletRequest request) {
-        String refreshToken=CookieUtil.getCookieValue(request,"refresh_token").orElseThrow(()->new BusinessException("Phiên đăng nhập hết hạn"));
-        Authentication authentication=jwtProvider.getAuthentication(refreshToken);
+        String refreshToken=CookieUtil.getCookieValue(request,REFRESH_TOKEN).orElseThrow(()->new BusinessException("Phiên đăng nhập hết hạn"));
+        Authentication authentication=jwtProvider.getAuthenticationForRefresh(refreshToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return LoginResponse.builder().token(jwtProvider.createAccessToken(authentication)).build();
     }

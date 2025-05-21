@@ -1,7 +1,10 @@
 package com.example.webdogiadung.repository.specification;
 
+import com.example.webdogiadung.constants.OrderStatus;
 import com.example.webdogiadung.entity.OrderEntity;
 import org.springframework.util.ObjectUtils;
+
+import java.util.List;
 
 public class OrderSpecification extends BaseSpecification<OrderEntity>{
     private final String NAME = "name";
@@ -9,6 +12,7 @@ public class OrderSpecification extends BaseSpecification<OrderEntity>{
     private final String IS_DELETED = "isDeleted";
     private final String ORDER_CODE = "orderCode";
     private final String CLIENT="client";
+    private final String STATUS="status";
     public static OrderSpecification builder() {
         return new OrderSpecification();
     }
@@ -51,5 +55,13 @@ public class OrderSpecification extends BaseSpecification<OrderEntity>{
         }
         return this;
     }
+    public OrderSpecification withStatusIn(List<OrderStatus> statuses) {
+        if (!ObjectUtils.isEmpty(statuses)) {
+            this.specifications.add((root, query, cb) ->
+                    root.get(STATUS).in(statuses));
+        }
+        return this;
+    }
+
 
 }

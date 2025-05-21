@@ -9,6 +9,7 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,56 +17,65 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/product/")
-public class ProductController implements BaseControllerInterface<ProductSearchRequest, ProductRequest, ProductResponse, String> {
+public class ProductController {
 
 
     private final ProductService productService;
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<ProductResponse> create(ProductRequest request) {
+    public ApiResponse<ProductResponse> create(@RequestBody ProductRequest request) {
         return ApiResponse.<ProductResponse>builder()
                 .status(Status.OK)
                 .data(productService.create(request))
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<ProductResponse> update(ProductRequest request) {
+    public ApiResponse<ProductResponse> update(@RequestBody ProductRequest request) {
         return ApiResponse.<ProductResponse>builder()
                 .status(Status.UPDATED)
                 .data(productService.update(request))
                 .build();
     }
 
-    public ApiResponse<PagingResponse<ProductResponse>> getAll(ProductSearchRequest request) {
+    @PostMapping("get/all")
+    public ApiResponse<PagingResponse<ProductResponse>> getAll(@RequestBody ProductSearchRequest request) {
         return ApiResponse.<PagingResponse<ProductResponse>>builder()
                 .status(Status.OK)
                 .data(productService.getAll(request))
                 .build();
     }
 
-    public ApiResponse<ProductResponse> getById(String id) {
+    @GetMapping("get/{id}")
+    public ApiResponse<ProductResponse> getById(@PathVariable String id) {
         return ApiResponse.<ProductResponse>builder()
                 .status(Status.OK)
                 .data(productService.getById(id))
                 .build();
     }
 
-    public ApiResponse<String> deleteById(String id, boolean isDeleted) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("delete/{id}/{isDeleted}")
+    public ApiResponse<String> deleteById(@PathVariable("id") String id, @PathVariable("isDeleted") boolean isDeleted) {
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data(productService.deleteById(id, isDeleted))
                 .build();
     }
 
-    public ApiResponse<String> deleteByListId(List<String> listId, boolean isDeleted) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("delete")
+    public ApiResponse<String> deleteByListId(@RequestBody List<String> listId, boolean isDeleted) {
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data(productService.deleteByListId(listId, isDeleted))
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("restore")
     public ApiResponse<String> restore(@RequestBody List<String> listId){
         return ApiResponse.<String>builder()

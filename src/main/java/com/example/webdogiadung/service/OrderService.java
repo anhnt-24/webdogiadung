@@ -1,26 +1,21 @@
 package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.Utils.RandomCodeGenerate;
-import com.example.webdogiadung.constants.MethodPayment;
 import com.example.webdogiadung.dto.request.OrderRequest;
 import com.example.webdogiadung.dto.request.search.OrderSearchRequest;
 import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.entity.OrderEntity;
-import com.example.webdogiadung.entity.ProductEntity;
-import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.OrderMapper;
 import com.example.webdogiadung.repository.ClientRepository;
 import com.example.webdogiadung.repository.OrderRepository;
 import com.example.webdogiadung.service.interfa.OrderServiceInterface;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -29,7 +24,6 @@ public class OrderService implements OrderServiceInterface {
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;
     private final OrderMapper orderMapper;
-    private final PaymentService paymentService;
     @Override
     public OrderResponse create(OrderRequest data) {
 

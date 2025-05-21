@@ -6,7 +6,6 @@ import com.example.webdogiadung.entity.ProductEntity;
 import com.example.webdogiadung.entity.ProductImage;
 import com.example.webdogiadung.repository.ProductImageRepository;
 import com.example.webdogiadung.repository.ProductRepository;
-import com.example.webdogiadung.service.CloudinaryService;
 import com.example.webdogiadung.service.interfa.ProductImageInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

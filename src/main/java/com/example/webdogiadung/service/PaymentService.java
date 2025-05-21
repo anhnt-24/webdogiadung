@@ -9,6 +9,7 @@ import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.repository.OrderRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -111,6 +112,11 @@ public class PaymentService {
                 fields.put(param, value);
             }
         }
+        String responseCode = fields.get("vnp_ResponseCode");
+        if (!"00".equals(responseCode)) {
+            throw new BusinessException("Thanh toán không thành công. Mã lỗi từ VNPAY: " + responseCode);
+        }
+
 
         String receivedHash = fields.remove("vnp_SecureHash");
 

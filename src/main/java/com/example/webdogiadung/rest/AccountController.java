@@ -18,15 +18,6 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService accountService;
 
-    @PostMapping("register")
-    public ApiResponse<LoginResponse> register(@RequestBody AccountRequest accountRequest, HttpServletResponse response) {
-        return ApiResponse.<LoginResponse>builder()
-                .status(Status.CREATED)
-                .data(
-                        accountService.create(accountRequest, response)
-                )
-                .build();
-    }
     @PostMapping("login")
     public ApiResponse<LoginResponse> login(@RequestBody AccountRequest accountRequest, HttpServletResponse response) {
         return ApiResponse.<LoginResponse>builder()

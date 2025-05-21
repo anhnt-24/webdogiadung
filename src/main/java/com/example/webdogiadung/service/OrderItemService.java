@@ -1,9 +1,9 @@
 package com.example.webdogiadung.service;
 
+import com.example.webdogiadung.constants.OrderItemStatus;
 import com.example.webdogiadung.dto.request.OrderItemRequest;
 import com.example.webdogiadung.dto.request.search.OrderItemSearchRequest;
 import com.example.webdogiadung.dto.response.OrderItemResponse;
-import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.entity.OrderEntity;
@@ -18,6 +18,7 @@ import com.example.webdogiadung.service.interfa.OrderItemServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,20 +32,22 @@ public class OrderItemService implements OrderItemServiceInterface {
     private final OrderItemMapper orderItemMapper;
 
     @Override
+    @Transactional
     public OrderItemResponse create(OrderItemRequest data) {
         var productEntity = productRepository.findById(data.getProductId())
                 .orElseThrow(() -> new DataNotFoundException("product not found"));
         var orderEntity = orderRepository.findById(data.getOrderId())
                 .orElseThrow(() -> new DataNotFoundException("order not found"));
-
-        if(productEntity.getStock()<data.getQuantity()){
+        if(productEntity.getStock()>=0 && productEntity.getStock()<data.getQuantity()){
             throw new BusinessException("Không đủ số lượng sản phẩm.");
         }
         productEntity.setStock(productEntity.getStock()-data.getQuantity());
         productRepository.save(productEntity);
+
         OrderItemEntity orderItemEntity = orderItemMapper.toEntity(data);
         orderItemEntity.setProduct(productEntity);
         orderItemEntity.setOrderEntity(orderEntity);
+
         return orderItemMapper.toResponse(orderItemRepository.save(orderItemEntity));
     }
 
@@ -82,6 +85,13 @@ public class OrderItemService implements OrderItemServiceInterface {
     public OrderItemResponse update(OrderItemRequest data) {
         var orderItemEntity = orderItemRepository.findById(data.getId())
                 .orElseThrow(() -> new DataNotFoundException("Sản phẩm không tồn tại."));
+        if(orderItemEntity.getOrderStatus()==OrderItemStatus.CANCELLED)
+            return orderItemMapper.toResponse(orderItemRepository.save(orderItemEntity));
+        if(data.getOrderStatus()==OrderItemStatus.CANCELLED){
+            OrderEntity orderEntity=orderItemEntity.getOrderEntity();
+            orderEntity.setTotalAmount(orderEntity.getTotalAmount()-orderItemEntity.getTotalPrice());
+            orderItemEntity.setOrderEntity(orderEntity);
+        }
         orderItemMapper.updateEntity(orderItemEntity,data);
         orderItemRepository.save(orderItemEntity);
         return orderItemMapper.toResponse(orderItemRepository.save(orderItemEntity));

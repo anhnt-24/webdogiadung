@@ -16,5 +16,4 @@ public class GuestRequest {
     String phone;
     Boolean unread;
     String color;
-
 }

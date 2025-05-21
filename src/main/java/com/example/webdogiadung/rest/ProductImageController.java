@@ -6,6 +6,7 @@ import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.ProductImageResponse;
 import com.example.webdogiadung.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,8 @@ public class ProductImageController {
 
     private final ProductImageService productImageService;
 
-    @PostMapping("/upload")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value = "/upload")
     public ApiResponse<Void> uploadProductImage(ProductImageRequest productImageRequest) {
         productImageService.saveProductImage(productImageRequest);
         return ApiResponse.<Void>builder()
@@ -35,6 +37,7 @@ public class ProductImageController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{imageId}")
     public ApiResponse<Void> deleteProductImage(@PathVariable String imageId) {
         productImageService.deleteProductImage(imageId);

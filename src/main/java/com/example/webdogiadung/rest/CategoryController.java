@@ -10,6 +10,7 @@ import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/category/")
-public class CategoryController implements BaseControllerInterface<CategorySearchRequest, CategoryRequest, CategoryResponse,String>{
+public class CategoryController{
 
     private final CategoryService categoryService;
 
-    @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<CategoryResponse> create(CategoryRequest request) {
         return ApiResponse.<CategoryResponse>builder()
@@ -30,7 +31,7 @@ public class CategoryController implements BaseControllerInterface<CategorySearc
                 .build();
     }
 
-    @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<CategoryResponse> update(CategoryRequest request) {
         return ApiResponse.<CategoryResponse>builder()
@@ -39,32 +40,34 @@ public class CategoryController implements BaseControllerInterface<CategorySearc
                 .build();
     }
 
-    @Override
-    public ApiResponse<PagingResponse<CategoryResponse>> getAll(CategorySearchRequest request) {
+    @PostMapping("get/all")
+    public ApiResponse<PagingResponse<CategoryResponse>> getAll(@RequestBody CategorySearchRequest request) {
         return ApiResponse.<PagingResponse<CategoryResponse>>builder()
                 .status(Status.OK)
                 .data(categoryService.getAll(request))
                 .build();
     }
 
-    @Override
-    public ApiResponse<CategoryResponse> getById(String id) {
+    @GetMapping("get/{id}")
+    public ApiResponse<CategoryResponse> getById(@PathVariable String id) {
         return ApiResponse.<CategoryResponse>builder()
                 .status(Status.OK)
                 .data(categoryService.getById(id))
                 .build();
     }
 
-    @Override
-    public ApiResponse<String> deleteById(String id,boolean isDeleted) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("delete/{id}/{isDeleted}")
+    public ApiResponse<String> deleteById(@PathVariable("id") String id,@PathVariable("isDeleted") boolean isDeleted) {
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data(categoryService.deleteById(id,isDeleted))
                 .build();
     }
 
-    @Override
-    public ApiResponse<String> deleteByListId(List<String> listId, boolean isDeleted) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("delete/{isDeleted}")
+    public ApiResponse<String> deleteByListId(@RequestBody List<String> listId, @PathVariable boolean isDeleted) {
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data(categoryService.deleteByListId(listId,isDeleted))

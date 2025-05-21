@@ -15,29 +15,30 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/chat-message/")
-public class ChatMessageController implements BaseControllerInterface<ChatMessageSearchRequest, ChatMessageRequest, ChatMessageResponse,Long>{
+public class ChatMessageController{
+
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
-    @Override
+
     @PostMapping("create")
-    public ApiResponse<ChatMessageResponse> create(ChatMessageRequest request) {
+    public ApiResponse<ChatMessageResponse> create(@RequestBody ChatMessageRequest request) {
         return null;
     }
 
-    @Override
     @PostMapping("update")
-    public ApiResponse<ChatMessageResponse> update(ChatMessageRequest request) {
+    public ApiResponse<ChatMessageResponse> update(@RequestBody ChatMessageRequest request) {
         return null;
     }
 
-    @Override
-    public ApiResponse<PagingResponse<ChatMessageResponse>> getAll(ChatMessageSearchRequest request) {
+    @PostMapping("get/all")
+    public ApiResponse<PagingResponse<ChatMessageResponse>> getAll(@RequestBody ChatMessageSearchRequest request) {
         return ApiResponse.<PagingResponse<ChatMessageResponse>>builder()
                 .status(Status.OK)
                 .data(chatMessageService.getAll(request))

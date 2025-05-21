@@ -40,10 +40,29 @@ public class SecurityConfiguration {
 
 
     private static final String [] PUBLIC_ENDPOINTS= {
-            "/api/v1/auth/register",
             "/api/v1/auth/login",
             "/api/v1/auth/logout",
+            "/api/v1/product/get/**",
+            "/api/v1/category/get/**",
+            "/api/v1/product/get/**",
+            "/api/v1/client/get/**",
+            "/api/v1/product-descriptions/get/**",
+            "/api/v1/product-descriptions/get/**",
+            "/api/v1/review/**",
+            "/api/v1/chat/get/**",
+            "/api/v1/product_image/**",
+            "/api/v1/client/create",
+            "/api/v1/guest/create",
+            "/api/v1/guest/get/**",
+            "/api/v1/payment/**",
+            "/api/v1/order/get/**",
+            "/api/v1/order/create/**",
+            "/api/v1/order-item/create/**",
+            "/api/v1/order-item/get/**",
+            "/api/v1/client/create/**",
+            "/api/v1/client/get/**",
             "/api/v1/auth/refresh",
+            "api/v1/chat-message/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
@@ -60,7 +79,7 @@ public class SecurityConfiguration {
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                .authenticationManager(authenticationManager())
                         .
                 headers(

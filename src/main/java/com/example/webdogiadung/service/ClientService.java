@@ -2,11 +2,9 @@ package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.dto.request.ClientRequest;
 import com.example.webdogiadung.dto.request.search.ClientSearchRequest;
-import com.example.webdogiadung.dto.response.CategoryResponse;
 import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.CategoryEntity;
 import com.example.webdogiadung.entity.ClientEntity;
 import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.exception.DataNotFoundException;

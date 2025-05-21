@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderRequest {
     String id;

@@ -8,17 +8,14 @@ import com.example.webdogiadung.dto.response.GuestResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.GuestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/guest/")
 @RequiredArgsConstructor
-public class GuestController implements BaseControllerInterface<GuestSearchRequest, GuestRequest, GuestResponse, String> {
+public class GuestController {
     private final GuestService guessService;
-    @Override
+
     @PostMapping("create")
     public ApiResponse<GuestResponse> create(@RequestBody GuestRequest request) {
         return ApiResponse.<GuestResponse>builder()
@@ -27,30 +24,29 @@ public class GuestController implements BaseControllerInterface<GuestSearchReque
                 .build();
     }
 
-    @Override
     @PostMapping("update")
     public ApiResponse<GuestResponse> update(@RequestBody GuestRequest request) {
         return null;
     }
 
-    @Override
-    public ApiResponse<PagingResponse<GuestResponse>> getAll(GuestSearchRequest request) {
+    @PostMapping("get/all")
+    public ApiResponse<PagingResponse<GuestResponse>> getAll(@RequestBody GuestSearchRequest request) {
         return ApiResponse.<PagingResponse<GuestResponse>>builder()
                 .status(Status.OK)
                 .data(guessService.getAll(request))
                 .build();
     }
 
-    @Override
-    public ApiResponse<String> deleteById(String s, boolean isDeleted) {
+    @DeleteMapping("delete/{id}")
+    public ApiResponse<String> deleteById(@PathVariable String id, boolean isDeleted) {
         return ApiResponse.<String>builder()
                 .status(Status.DELETED)
                 .data("Xóa thành công. ")
                     .build();
     }
 
-    @Override
-    public ApiResponse<GuestResponse> getById(String id) {
+    @GetMapping("get/{id}")
+    public ApiResponse<GuestResponse> getById(@PathVariable String id) {
         return ApiResponse.<GuestResponse>builder()
                 .status(Status.OK)
                 .data(guessService.getById(id))
