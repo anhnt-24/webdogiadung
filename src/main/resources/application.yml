@@ -1,38 +1,49 @@
 spring:
   application:
-    name:
-      CostumeForRent
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://${POSTGRESQL_HOST:localhost}:${POSTGRESQL_PORT:5432}/${POSTGRESQL_DATABASE:postgres}
-    username: ${POSTGRESQL_USER:admin}
-    password: ${POSTGRESQL_PASS:123456}
-    hikari:
-      poolName: Hikari
-      auto-commit: false
+    name: webbandogiadung
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    database: postgresql
-    show-sql: true
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-    generate-ddl: true
+    show-sql: true
+
+postgres:
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:123456}
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSourcedial
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
-      hibernate.jdbc.time_zone: UTC
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: false
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-      # modify batch size as necessary
-      hibernate.jdbc.batch_size: 25
-      hibernate.order_inserts: true
-      hibernate.order_updates: true
-      hibernate.query.fail_on_pagination_over_collection_fetch: true
-      hibernate.query.in_clause_parameter_padding: true
+      hibernate:
+        format_sql: true
+        ddl-auto: update
+
+sqlserver:
+  datasource:
+    url: ${SQLSERVER_URL:jdbc:sqlserver://localhost:1433;databaseName=datamart_db;encrypt=true;trustServerCertificate=true;sendStringParametersAsUnicode=false}
+    username: ${SQLSERVER_USER:sa}
+    password: ${SQLSERVER_PASSWORD:YourStrong@Passw0rd}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        hbm2ddl:
+          auto: validate
+
 jwt:
   signerKey: eyjHbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9dasdasfasfasd
   expireTime: 3600

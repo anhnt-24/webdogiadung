@@ -1,7 +1,7 @@
 package com.example.webdogiadung.dto.request.search;
 
-import com.example.webdogiadung.entity.ReviewEntity;
-import com.example.webdogiadung.repository.specification.ReviewSpecification;
+import com.example.webdogiadung.entity.psql.ReviewEntity;
+import com.example.webdogiadung.repository.psql.specification.ReviewSpecification;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,10 +1,8 @@
 package com.example.webdogiadung.dto.request.search;
 
 import com.example.webdogiadung.constants.OrderStatus;
-import com.example.webdogiadung.entity.ClientEntity;
-import com.example.webdogiadung.entity.OrderEntity;
-import com.example.webdogiadung.repository.specification.ClientSpecification;
-import com.example.webdogiadung.repository.specification.OrderSpecification;
+import com.example.webdogiadung.entity.psql.OrderEntity;
+import com.example.webdogiadung.repository.psql.specification.OrderSpecification;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

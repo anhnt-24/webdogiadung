@@ -7,8 +7,10 @@ import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
+import com.example.webdogiadung.service.ExcelExportService;
 import com.example.webdogiadung.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class OrderController{
 
     private final OrderService orderService;
+    private final ExcelExportService excelExportService;
 
     @PostMapping(value = "create")
     public ApiResponse<OrderResponse> create(@RequestBody OrderRequest request) {
@@ -60,6 +63,16 @@ public class OrderController{
                 .status(Status.DELETED)
                 .data(orderService.deleteById(id,isDeleted))
                 .build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("export")
+    public ResponseEntity<byte[]> export() {
+        byte[] file = excelExportService.exportToExcel(orderService.getAllForExport(), OrderResponse.class);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=category.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(file);
     }
 
 }

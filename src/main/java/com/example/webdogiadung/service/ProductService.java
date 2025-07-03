@@ -5,12 +5,12 @@ import com.example.webdogiadung.dto.request.search.ProductSearchRequest;
 import com.example.webdogiadung.dto.response.ProductResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.CategoryEntity;
-import com.example.webdogiadung.entity.ProductEntity;
+import com.example.webdogiadung.entity.psql.CategoryEntity;
+import com.example.webdogiadung.entity.psql.ProductEntity;
 import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.mapper.ProductMapper;
-import com.example.webdogiadung.repository.CategoryRepository;
-import com.example.webdogiadung.repository.ProductRepository;
+import com.example.webdogiadung.repository.psql.CategoryRepository;
+import com.example.webdogiadung.repository.psql.ProductRepository;
 import com.example.webdogiadung.service.interfa.ProductServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class ProductService implements ProductServiceInterface {
         CategoryEntity categoryEntity=categoryRepository.findById(data.getCategoryId()).orElseThrow(()->new BusinessException("Danh mục không tồn tại."));
         ProductEntity productEntity = productMapper.toEntity(data);
         productEntity.setCategory(categoryEntity);
-        String imgUrl = (String) cloudinaryService.upload(data.getThumbnail()).get("secure_url");
+        String imgUrl = (String) cloudinaryService.upload(data.getThumbnailFile()).get("secure_url");
         productEntity.setThumbnail(imgUrl);
         return productMapper.toResponse(productRepository.save(productEntity));
     }
@@ -53,6 +53,9 @@ public class ProductService implements ProductServiceInterface {
                         .setTotalPage(productEntityPage.getTotalPages())
                         .setTotalRecord(productEntityPage.getTotalElements()))
                 .build();
+    }
+    public List<ProductResponse> getAllForExport() {
+        return productMapper.toResponse(productRepository.findAll());
     }
 
     @Override
@@ -90,8 +93,8 @@ public class ProductService implements ProductServiceInterface {
         if (nameExisted) {
             throw new BusinessException("Tên sản phẩm đã tồn tại.");
         }
-        if (data.getThumbnail() != null && !data.getThumbnail().isEmpty()) {
-            String imgUrl = (String) cloudinaryService.upload(data.getThumbnail()).get("secure_url");
+        if (data.getThumbnailFile() != null && !data.getThumbnailFile().isEmpty()) {
+            String imgUrl = (String) cloudinaryService.upload(data.getThumbnailFile()).get("secure_url");
             productEntity.setThumbnail(imgUrl);
         }
         return productMapper.toResponse(productRepository.save(productEntity));

@@ -2,15 +2,14 @@ package com.example.webdogiadung.mapper;
 
 import com.example.webdogiadung.dto.request.CategoryRequest;
 import com.example.webdogiadung.dto.response.CategoryResponse;
-import com.example.webdogiadung.entity.CategoryEntity;
+import com.example.webdogiadung.entity.psql.CategoryEntity;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper extends  BaseEntityMapper<CategoryEntity,CategoryRequest, CategoryResponse>{
 
     @Override
     @Mappings({
-            @Mapping(target = "thumbnail",ignore = true),
             @Mapping(target = "id",ignore = true)
     })
     @BeanMapping(
@@ -21,7 +20,6 @@ public interface CategoryMapper extends  BaseEntityMapper<CategoryEntity,Categor
 
     @Override
     @Mappings({
-            @Mapping(target = "thumbnail",ignore = true),
             @Mapping(target = "id",ignore = true)
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,

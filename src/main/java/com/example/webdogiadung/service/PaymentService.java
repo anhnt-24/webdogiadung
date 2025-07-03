@@ -2,16 +2,12 @@ package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.config.VnpayConfiguration;
 import com.example.webdogiadung.constants.OrderStatus;
-import com.example.webdogiadung.constants.Status;
 import com.example.webdogiadung.dto.request.OrderRequest;
-import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.exception.BusinessException;
-import com.example.webdogiadung.repository.OrderRepository;
+import com.example.webdogiadung.repository.psql.OrderRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

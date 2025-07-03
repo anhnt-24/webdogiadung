@@ -8,8 +8,10 @@ import com.example.webdogiadung.dto.response.CategoryResponse;
 import com.example.webdogiadung.dto.response.SearchResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.CategoryService;
+import com.example.webdogiadung.service.ExcelExportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class CategoryController{
 
     private final CategoryService categoryService;
+    private final ExcelExportService excelExportService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -88,4 +91,16 @@ public class CategoryController{
                 .data(categoryService.getAllForSelect())
                 .build();
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("export")
+    public ResponseEntity<byte[]> export() {
+        byte[] file = excelExportService.exportToExcel(categoryService.getAllForExport(), CategoryResponse.class);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=category.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(file);
+    }
+
+
 }

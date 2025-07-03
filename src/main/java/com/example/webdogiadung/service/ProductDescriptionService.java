@@ -2,17 +2,15 @@ package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.dto.request.ProductDescriptionRequest;
 import com.example.webdogiadung.dto.response.ProductDescriptionResponse;
-import com.example.webdogiadung.entity.ProductDescriptionEntity;
-import com.example.webdogiadung.entity.ProductEntity;
+import com.example.webdogiadung.entity.psql.ProductDescriptionEntity;
+import com.example.webdogiadung.entity.psql.ProductEntity;
 import com.example.webdogiadung.exception.BusinessException;
-import com.example.webdogiadung.repository.ProductDescriptionRepository;
-import com.example.webdogiadung.repository.ProductRepository;
+import com.example.webdogiadung.repository.psql.ProductDescriptionRepository;
+import com.example.webdogiadung.repository.psql.ProductRepository;
 import com.example.webdogiadung.service.interfa.ProductDescriptionServiceInterface;
 import com.example.webdogiadung.mapper.ProductDescriptionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

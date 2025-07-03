@@ -2,7 +2,7 @@ package com.example.webdogiadung.mapper;
 
 import com.example.webdogiadung.dto.request.ProductDescriptionRequest;
 import com.example.webdogiadung.dto.response.ProductDescriptionResponse;
-import com.example.webdogiadung.entity.ProductDescriptionEntity;
+import com.example.webdogiadung.entity.psql.ProductDescriptionEntity;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

@@ -1,11 +1,8 @@
 package com.example.webdogiadung.mapper;
 
-import com.example.webdogiadung.dto.request.ClientRequest;
 import com.example.webdogiadung.dto.request.OrderRequest;
-import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.OrderResponse;
-import com.example.webdogiadung.entity.ClientEntity;
-import com.example.webdogiadung.entity.OrderEntity;
+import com.example.webdogiadung.entity.psql.OrderEntity;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring",uses = {ClientMapper.class})

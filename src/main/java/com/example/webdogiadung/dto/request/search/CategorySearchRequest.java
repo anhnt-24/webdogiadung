@@ -1,9 +1,8 @@
 package com.example.webdogiadung.dto.request.search;
 
-import com.example.webdogiadung.entity.CategoryEntity;
-import com.example.webdogiadung.repository.specification.CategorySpecification;
+import com.example.webdogiadung.entity.psql.CategoryEntity;
+import com.example.webdogiadung.repository.psql.specification.CategorySpecification;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;

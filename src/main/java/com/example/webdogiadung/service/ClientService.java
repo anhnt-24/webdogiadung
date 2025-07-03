@@ -5,11 +5,11 @@ import com.example.webdogiadung.dto.request.search.ClientSearchRequest;
 import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.ClientEntity;
+import com.example.webdogiadung.entity.psql.ClientEntity;
 import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.ClientMapper;
-import com.example.webdogiadung.repository.ClientRepository;
+import com.example.webdogiadung.repository.psql.ClientRepository;
 import com.example.webdogiadung.service.interfa.ClientServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,6 +47,9 @@ public class ClientService implements ClientServiceInterface {
                 .build();
     }
 
+    public List<ClientResponse> getAllForExport() {
+        return clientMapper.toResponse(clientRepository.findAll());
+    }
     @Override
     public ClientResponse getById(String id) {
         return clientMapper.toResponse(clientRepository.findById(id).orElse(null));

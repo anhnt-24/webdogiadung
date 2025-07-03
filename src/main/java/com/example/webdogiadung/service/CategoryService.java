@@ -6,10 +6,10 @@ import com.example.webdogiadung.dto.response.CategoryResponse;
 import com.example.webdogiadung.dto.response.SearchResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.CategoryEntity;
+import com.example.webdogiadung.entity.psql.CategoryEntity;
 import com.example.webdogiadung.exception.BusinessException;
 import com.example.webdogiadung.mapper.CategoryMapper;
-import com.example.webdogiadung.repository.CategoryRepository;
+import com.example.webdogiadung.repository.psql.CategoryRepository;
 import com.example.webdogiadung.service.interfa.CategoryServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +33,7 @@ public class CategoryService implements CategoryServiceInterface {
             throw new BusinessException("Danh mục đã tồn tại.");
         }
         CategoryEntity categoryEntity=categoryMapper.toEntity(data);
-        String imgUrl= (String) cloudinaryService.upload(data.getThumbnail()).get("secure_url");
+        String imgUrl= (String) cloudinaryService.upload(data.getThumbnailFile()).get("secure_url");
         categoryEntity.setThumbnail(imgUrl);
         return categoryMapper.toResponse(categoryRepository.save(categoryEntity));
     }
@@ -50,6 +50,11 @@ public class CategoryService implements CategoryServiceInterface {
                         .setTotalRecord(categoryEntityPage.getTotalElements()))
                 .build();
     }
+
+    public List<CategoryResponse> getAllForExport() {
+        return categoryMapper.toResponse(categoryRepository.findAll());
+    }
+
 
     @Override
     public CategoryResponse getById(String id) {
@@ -79,8 +84,8 @@ public class CategoryService implements CategoryServiceInterface {
         if (nameExisted) {
             throw new BusinessException("Tên danh mục đã tồn tại.");
         }
-        if (data.getThumbnail() != null && !data.getThumbnail().isEmpty()) {
-            String imgUrl = (String) cloudinaryService.upload(data.getThumbnail()).get("secure_url");
+        if (data.getThumbnailFile() != null && !data.getThumbnailFile().isEmpty()) {
+            String imgUrl = (String) cloudinaryService.upload(data.getThumbnailFile()).get("secure_url");
             categoryEntity.setThumbnail(imgUrl);
         }
         return categoryMapper.toResponse(categoryRepository.save(categoryEntity));

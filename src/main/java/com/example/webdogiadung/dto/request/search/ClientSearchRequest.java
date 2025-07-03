@@ -1,8 +1,8 @@
 package com.example.webdogiadung.dto.request.search;
 
 
-import com.example.webdogiadung.entity.ClientEntity;
-import com.example.webdogiadung.repository.specification.ClientSpecification;
+import com.example.webdogiadung.entity.psql.ClientEntity;
+import com.example.webdogiadung.repository.psql.specification.ClientSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ClientSearchRequest extends FilteringRequest<ClientEntity> {

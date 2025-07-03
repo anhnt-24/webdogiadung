@@ -1,12 +1,11 @@
 package com.example.webdogiadung.config.security;
 
-import com.example.webdogiadung.entity.AccountEntity;
+import com.example.webdogiadung.entity.psql.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package com.example.webdogiadung.dto.request.search;
 
-import com.example.webdogiadung.entity.ChatMessageEntity;
-import com.example.webdogiadung.repository.specification.ChatMessageSpecification;
+import com.example.webdogiadung.entity.psql.ChatMessageEntity;
+import com.example.webdogiadung.repository.psql.specification.ChatMessageSpecification;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

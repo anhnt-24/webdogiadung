@@ -6,11 +6,11 @@ import com.example.webdogiadung.dto.request.search.OrderSearchRequest;
 import com.example.webdogiadung.dto.response.OrderResponse;
 import com.example.webdogiadung.dto.response.page.PageableData;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
-import com.example.webdogiadung.entity.OrderEntity;
+import com.example.webdogiadung.entity.psql.OrderEntity;
 import com.example.webdogiadung.exception.DataNotFoundException;
 import com.example.webdogiadung.mapper.OrderMapper;
-import com.example.webdogiadung.repository.ClientRepository;
-import com.example.webdogiadung.repository.OrderRepository;
+import com.example.webdogiadung.repository.psql.ClientRepository;
+import com.example.webdogiadung.repository.psql.OrderRepository;
 import com.example.webdogiadung.service.interfa.OrderServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -46,7 +46,9 @@ public class OrderService implements OrderServiceInterface {
                         .setTotalRecord(orderEntityPage.getTotalElements()))
                 .build();
     }
-
+    public List<OrderResponse> getAllForExport() {
+        return orderMapper.toResponse(orderRepository.findAll());
+    }
     @Override
     public OrderResponse getById(String id) {
         return orderMapper.toResponse(orderRepository.findById(id).orElse(null));

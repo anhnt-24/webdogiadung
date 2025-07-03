@@ -2,10 +2,10 @@ package com.example.webdogiadung.service;
 
 import com.example.webdogiadung.dto.request.ProductImageRequest;
 import com.example.webdogiadung.dto.response.ProductImageResponse;
-import com.example.webdogiadung.entity.ProductEntity;
-import com.example.webdogiadung.entity.ProductImage;
-import com.example.webdogiadung.repository.ProductImageRepository;
-import com.example.webdogiadung.repository.ProductRepository;
+import com.example.webdogiadung.entity.psql.ProductEntity;
+import com.example.webdogiadung.entity.psql.ProductImage;
+import com.example.webdogiadung.repository.psql.ProductImageRepository;
+import com.example.webdogiadung.repository.psql.ProductRepository;
 import com.example.webdogiadung.service.interfa.ProductImageInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

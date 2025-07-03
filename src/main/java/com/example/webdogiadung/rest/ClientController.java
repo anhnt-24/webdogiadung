@@ -9,8 +9,10 @@ import com.example.webdogiadung.dto.response.CategoryResponse;
 import com.example.webdogiadung.dto.response.ClientResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
 import com.example.webdogiadung.service.ClientService;
+import com.example.webdogiadung.service.ExcelExportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ import java.util.List;
 public class ClientController{
 
     private final ClientService clientService;
+    private final ExcelExportService excelExportService;
 
     @PostMapping(value = "create")
     public ApiResponse<ClientResponse> create(@RequestBody ClientRequest request) {
@@ -56,6 +59,8 @@ public class ClientController{
                 .build();
     }
 
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("delete/{id}")
     public ApiResponse<String> deleteById(@PathVariable String id, boolean isDeleted) {
@@ -63,5 +68,15 @@ public class ClientController{
                 .status(Status.DELETED)
                 .data(clientService.deleteById(id,isDeleted))
                 .build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("export")
+    public ResponseEntity<byte[]> export() {
+        byte[] file = excelExportService.exportToExcel(clientService.getAllForExport(), ClientResponse.class);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=category.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(file);
     }
 }

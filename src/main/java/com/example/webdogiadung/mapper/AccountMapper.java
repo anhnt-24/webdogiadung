@@ -2,7 +2,7 @@ package com.example.webdogiadung.mapper;
 
 import com.example.webdogiadung.dto.request.AccountRequest;
 import com.example.webdogiadung.dto.response.AccountResponse;
-import com.example.webdogiadung.entity.AccountEntity;
+import com.example.webdogiadung.entity.psql.AccountEntity;
 import org.mapstruct.*;
 
 

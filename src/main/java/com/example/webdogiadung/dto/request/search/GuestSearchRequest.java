@@ -1,6 +1,6 @@
 package com.example.webdogiadung.dto.request.search;
 
-import com.example.webdogiadung.entity.GuestEntity;
+import com.example.webdogiadung.entity.psql.GuestEntity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

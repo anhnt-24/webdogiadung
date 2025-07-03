@@ -6,9 +6,11 @@ import com.example.webdogiadung.dto.request.search.ProductSearchRequest;
 import com.example.webdogiadung.dto.response.ApiResponse;
 import com.example.webdogiadung.dto.response.ProductResponse;
 import com.example.webdogiadung.dto.response.page.PagingResponse;
+import com.example.webdogiadung.service.ExcelExportService;
 import com.example.webdogiadung.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ public class ProductController {
 
 
     private final ProductService productService;
-
+    private final ExcelExportService excelExportService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -82,6 +84,16 @@ public class ProductController {
                 .status(Status.UPDATED)
                 .data(productService.restore(listId))
                 .build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("export")
+    public ResponseEntity<byte[]> export() {
+        byte[] file = excelExportService.exportToExcel(productService.getAllForExport(), ProductResponse.class);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=category.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(file);
     }
 
 }

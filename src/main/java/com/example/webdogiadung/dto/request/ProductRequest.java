@@ -1,8 +1,6 @@
 package com.example.webdogiadung.dto.request;
 
-import com.example.webdogiadung.entity.CategoryEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +23,7 @@ public class ProductRequest {
 
     Long sellingPrice;
 
-    MultipartFile thumbnail;
+    MultipartFile thumbnailFile;
 
     Long promotionPrice;
 
@@ -36,4 +34,6 @@ public class ProductRequest {
     Boolean isDeleted;
 
     Long stock;
+
+
 }

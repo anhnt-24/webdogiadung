@@ -1,9 +1,5 @@
 package com.example.webdogiadung.dto.response;
 
-import com.example.webdogiadung.entity.CategoryEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

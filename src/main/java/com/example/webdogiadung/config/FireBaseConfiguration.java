@@ -9,19 +9,19 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FireBaseConfiguration {
-    @Bean
-    public FirebaseApp firebaseApp() throws IOException, IOException {
-        if(FirebaseApp.getApps().isEmpty()) {
-            FileInputStream serviceAccount = new FileInputStream(new ClassPathResource("./ecomerce-40e32-firebase-adminsdk-fbsvc-40ae5eac96.json").getFile());
+        @Bean
+        public FirebaseApp firebaseApp() throws IOException {
+            ClassPathResource resource = new ClassPathResource("ecomerce-40e32-firebase-adminsdk-fbsvc-40ae5eac96.json");
+            InputStream serviceAccount = resource.getInputStream();
+
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
-            return FirebaseApp.initializeApp(options);
-        }
-       return FirebaseApp.getInstance();
 
+            return FirebaseApp.initializeApp(options);
     }
 }

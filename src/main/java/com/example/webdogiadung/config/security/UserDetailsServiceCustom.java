@@ -1,7 +1,7 @@
 package com.example.webdogiadung.config.security;
 
-import com.example.webdogiadung.entity.AccountEntity;
-import com.example.webdogiadung.repository.AccountRepository;
+import com.example.webdogiadung.entity.psql.AccountEntity;
+import com.example.webdogiadung.repository.psql.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

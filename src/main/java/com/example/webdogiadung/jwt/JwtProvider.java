@@ -1,7 +1,7 @@
 package com.example.webdogiadung.jwt;
 
 import com.example.webdogiadung.config.security.UserDetailsCustom;
-import com.example.webdogiadung.entity.AccountEntity;
+import com.example.webdogiadung.entity.psql.AccountEntity;
 import com.example.webdogiadung.properties.JwtProperties;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;

@@ -1,5 +1,6 @@
 services:
   postgres:
+
     container_name: postgres_container
     image: postgres
     environment:
@@ -14,30 +15,37 @@ services:
 
   sqlserver:
     container_name: sqlserver_container
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: ${DB_PASSWORD:-YourStrong@Passw0rd}
+      SA_PASSWORD: "YourStrong@Passw0rd"
       MSSQL_PID: "Express"
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+    user: "0:0"
     restart: unless-stopped
-
-  mongo:
-    container_name: mongo_container
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
+  spring-app:
+    build:
+      context: ../../
+      dockerfile: src/docker/Dockerfile
+    container_name: spring_app
+    depends_on:
+      - postgres
+      - sqlserver
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-123456}
-    restart: unless-stopped
+      SPRING_PROFILES_ACTIVE: docker
 
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+
+      SQLSERVER_URL: jdbc:sqlserver://sqlserver:1433;databaseName=datamart_db
+      SQLSERVER_USER: sa
+      SQLSERVER_PASSWORD: YourStrong@Passw0rd
+    ports:
+      - "8080:8080"
 volumes:
   postgres:
   sqlserver_data:
-  mongo_data:

@@ -1,5 +1,6 @@
 package com.example.webdogiadung.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,5 @@ public class CategoryRequest {
 
     Boolean isDeleted;
 
-    MultipartFile thumbnail;
+    MultipartFile thumbnailFile;
 }
